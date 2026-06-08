@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Risk Analysis — 9 Kebutuhan Pokok &amp; Rupiah · 5 Juni 2026</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --card: #1a1a1a;
+    --card2: #202020;
+    --border: #2a2a2a;
+    --accent: #f0a500;
+    --accent2: #e05a00;
+    --red: #e53935;
+    --orange: #fb8c00;
+    --yellow: #fdd835;
+    --green: #43a047;
+    --blue: #1e88e5;
+    --teal: #00acc1;
+    --text: #e8e8e8;
+    --text2: #999999;
+    --text3: #666666;
+    --font: 'Segoe UI', 'Arial', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 13px; line-height: 1.5; min-height: 100vh; }
+
+  /* TOP HEADER */
+  .top-header {
+    background: linear-gradient(135deg, #0d0d0d 0%, #200a0a 50%, #0d0d0d 100%);
+    border-bottom: 1px solid #3a1010;
+    padding: 20px 32px 16px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .top-header .logo-area h1 { font-size: 19px; font-weight: 700; letter-spacing: 0.5px; color: var(--red); text-transform: uppercase; }
+  .top-header .logo-area .sub { font-size: 11px; color: var(--text2); margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+  .top-header .meta-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  .top-header .date-badge { font-size: 11px; color: var(--text2); letter-spacing: 0.5px; }
+  .alert-banner {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(229,57,53,0.18); border: 1px solid rgba(229,57,53,0.5);
+    border-radius: 4px; padding: 4px 12px; font-size: 11px; font-weight: 700;
+    color: var(--red); letter-spacing: 0.8px; text-transform: uppercase;
+  }
+  .dot-blink { width: 7px; height: 7px; border-radius: 50%; background: var(--red); animation: blink 1s infinite; display: inline-block; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.15} }
+
+  /* BREAKING BANNER */
+  .breaking-bar {
+    background: rgba(229,57,53,0.12); border-bottom: 1px solid rgba(229,57,53,0.3);
+    padding: 7px 32px; display: flex; align-items: center; gap: 12px; font-size: 11px;
+  }
+  .breaking-tag {
+    background: var(--red); color: #fff; font-size: 9px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; flex-shrink: 0;
+  }
+  .breaking-text { color: var(--text); font-weight: 600; }
+  .breaking-text span { color: var(--red); }
+
+  /* LAYOUT */
+  .main-wrap { max-width: 1500px; margin: 0 auto; padding: 22px 24px 60px; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text3); margin: 30px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before { content:''; display:inline-block; width:3px; height:13px; background:var(--accent); border-radius:2px; }
+
+  /* KPI ROW */
+  .kpi-row { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; }
+  .kpi-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px 14px; position: relative; overflow: hidden;
+  }
+  .kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+  .kpi-card.danger::before   { background: var(--red); }
+  .kpi-card.warning::before  { background: var(--orange); }
+  .kpi-card.alert::before    { background: var(--yellow); }
+  .kpi-card.ok::before       { background: var(--green); }
+  .kpi-card.info::before     { background: var(--blue); }
+  .kpi-card.teal::before     { background: var(--teal); }
+  /* NEW RECORD glow */
+  .kpi-card.record { border-color: rgba(229,57,53,0.45); box-shadow: 0 0 18px rgba(229,57,53,0.12); }
+  .kpi-card.record::before   { background: linear-gradient(90deg, var(--red), var(--orange)); }
+
+  .kpi-label  { font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; }
+  .kpi-value  { font-size: 22px; font-weight: 700; line-height: 1; margin-bottom: 3px; }
+  .kpi-card.danger .kpi-value  { color: var(--red); }
+  .kpi-card.record .kpi-value  { color: var(--red); }
+  .kpi-card.warning .kpi-value { color: var(--orange); }
+  .kpi-card.alert .kpi-value   { color: var(--yellow); }
+  .kpi-card.ok .kpi-value      { color: var(--green); }
+  .kpi-card.info .kpi-value    { color: var(--blue); }
+  .kpi-card.teal .kpi-value    { color: var(--teal); }
+  .kpi-sub    { font-size: 10px; color: var(--text2); }
+  .kpi-change { font-size: 10px; margin-top: 5px; display:inline-flex; align-items:center; gap:3px; padding:2px 6px; border-radius:3px; font-weight:600; }
+  .kpi-change.up  { background: rgba(229,57,53,0.15); color: var(--red); }
+  .kpi-change.dn  { background: rgba(67,160,71,0.15); color: var(--green); }
+  .kpi-change.neu { background: rgba(255,255,255,0.07); color: var(--text2); }
+  .record-tag {
+    font-size: 8px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    background: rgba(229,57,53,0.25); color: var(--red); border: 1px solid rgba(229,57,53,0.4);
+    border-radius: 3px; padding: 1px 5px; margin-left: 5px; vertical-align: middle;
+  }
+
+  /* GRIDS */
+  .two-col   { display: grid; grid-template-columns: 1.55fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* CARD */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .card-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text2); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .icon { width:22px; height:22px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:12px; }
+  .icon-red    { background: rgba(229,57,53,0.2); color: var(--red); }
+  .icon-orange { background: rgba(251,140,0,0.2); color: var(--orange); }
+  .icon-yellow { background: rgba(253,216,53,0.2); color: var(--yellow); }
+  .icon-green  { background: rgba(67,160,71,0.2); color: var(--green); }
+  .icon-blue   { background: rgba(30,136,229,0.2); color: var(--blue); }
+  .icon-teal   { background: rgba(0,172,193,0.2); color: var(--teal); }
+  .icon-gold   { background: rgba(240,165,0,0.2); color: var(--accent); }
+
+  /* SEMBAKO TABLE */
+  .sembako-table { width: 100%; border-collapse: collapse; }
+  .sembako-table thead tr th {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3);
+    padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  .sembako-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
+  .sembako-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+  .sembako-table tbody td { padding: 9px 10px; font-size: 12px; }
+  .sembako-table td.commodity { font-weight: 600; color: var(--text); }
+  .sembako-table td.price { color: var(--accent); font-weight: 700; font-family: monospace; font-size: 12px; }
+  .sembako-table td.change-up  { color: var(--red); font-weight: 600; }
+  .sembako-table td.change-dn  { color: var(--green); font-weight: 600; }
+  .sembako-table td.change-neu { color: var(--text2); }
+  .sembako-table td.risk { text-align: center; }
+  .risk-badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:9px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+  .risk-high { background:rgba(229,57,53,0.2); color:var(--red); border:1px solid rgba(229,57,53,0.3); }
+  .risk-med  { background:rgba(251,140,0,0.2); color:var(--orange); border:1px solid rgba(251,140,0,0.3); }
+  .risk-low  { background:rgba(67,160,71,0.2); color:var(--green); border:1px solid rgba(67,160,71,0.3); }
+  .risk-crit { background:rgba(229,57,53,0.35); color:#ff6b6b; border:1px solid rgba(229,57,53,0.5); }
+  .het-exceeded { font-size:9px; color:var(--red); margin-left:4px; }
+
+  /* BAR CHART */
+  .bar-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .bar-label { width:140px; font-size:11px; color:var(--text2); flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bar-track { flex:1; background:rgba(255,255,255,0.06); border-radius:3px; height:8px; overflow:hidden; }
+  .bar-fill  { height:100%; border-radius:3px; }
+  .bar-value { width:60px; font-size:11px; font-weight:600; text-align:right; flex-shrink:0; font-family:monospace; }
+
+  /* TIMELINE */
+  .timeline { position:relative; padding-left:20px; }
+  .timeline::before { content:''; position:absolute; left:6px; top:4px; bottom:4px; width:1px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:14px; }
+  .tl-item::before { content:''; position:absolute; left:-17px; top:5px; width:7px; height:7px; border-radius:50%; }
+  .tl-item.danger::before  { background:var(--red); box-shadow:0 0 6px rgba(229,57,53,0.6); }
+  .tl-item.warning::before { background:var(--orange); }
+  .tl-item.info::before    { background:var(--blue); }
+  .tl-item.ok::before      { background:var(--green); }
+  .tl-item.new::before     { background:var(--red); box-shadow:0 0 8px rgba(229,57,53,0.8); animation:blink 1s infinite; }
+  .tl-date { font-size:9px; color:var(--text3); letter-spacing:0.5px; margin-bottom:2px; display:flex; align-items:center; gap:5px; }
+  .tl-new  { font-size:8px; font-weight:800; color:var(--red); letter-spacing:1px; background:rgba(229,57,53,0.15); padding:1px 5px; border-radius:2px; }
+  .tl-text { font-size:11px; color:var(--text); line-height:1.45; }
+  .tl-source { font-size:9px; color:var(--text3); margin-top:2px; }
+
+  /* MITIGATION */
+  .mitig-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .mitig-item { background:var(--card2); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:6px; padding:12px 14px; }
+  .mitig-item.urgent    { border-left-color: var(--red); }
+  .mitig-item.moderate  { border-left-color: var(--orange); }
+  .mitig-item.strategic { border-left-color: var(--teal); }
+  .mitig-item.preventive{ border-left-color: var(--yellow); }
+  .mitig-label { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; }
+  .mitig-item.urgent    .mitig-label { color:var(--red); }
+  .mitig-item.moderate  .mitig-label { color:var(--orange); }
+  .mitig-item.strategic .mitig-label { color:var(--teal); }
+  .mitig-item.preventive.mitig-label { color:var(--yellow); }
+  .mitig-item.preventive .mitig-label { color:var(--yellow); }
+  .mitig-title { font-size:12px; font-weight:700; color:var(--text); margin-bottom:6px; }
+  .mitig-list  { list-style:none; padding:0; }
+  .mitig-list li { font-size:11px; color:var(--text2); padding:3px 0; padding-left:14px; position:relative; line-height:1.4; }
+  .mitig-list li::before { content:'›'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+
+  /* NEWS */
+  .news-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .news-item {
+    background:var(--card2); border:1px solid var(--border); border-radius:6px;
+    padding:12px; display:flex; flex-direction:column; gap:6px; transition:border-color 0.15s;
+  }
+  .news-item.new-item { border-color:rgba(229,57,53,0.3); }
+  .news-item:hover { border-color:#444; }
+  .news-tag { display:inline-block; font-size:8px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; padding:2px 7px; border-radius:3px; margin-bottom:2px; }
+  .tag-sembako  { background:rgba(240,165,0,0.15);  color:var(--accent); }
+  .tag-rupiah   { background:rgba(229,57,53,0.15);  color:var(--red); }
+  .tag-pangan   { background:rgba(0,172,193,0.15);  color:var(--teal); }
+  .tag-geopolit { background:rgba(251,140,0,0.15);  color:var(--orange); }
+  .tag-energi   { background:rgba(30,136,229,0.15); color:var(--blue); }
+  .tag-iklim    { background:rgba(67,160,71,0.15);  color:var(--green); }
+  .tag-new      { background:rgba(229,57,53,0.2);   color:var(--red); font-weight:900; }
+  .news-headline { font-size:11px; font-weight:600; color:var(--text); line-height:1.4; }
+  .news-headline a { color:var(--text); text-decoration:none; }
+  .news-headline a:hover { color:var(--accent); }
+  .news-source { font-size:9px; color:var(--text3); margin-top:auto; }
+
+  /* GAUGE */
+  .gauge-wrap { display:flex; flex-direction:column; align-items:center; padding:4px 0; }
+
+  /* RISK FACTOR CARDS */
+  .risk-factor {
+    background:var(--card); border:1px solid var(--border); border-radius:8px; padding:14px 16px;
+  }
+  .risk-factor.crit  { border-left:3px solid var(--red); border-color:rgba(229,57,53,0.3); }
+  .risk-factor.high  { border-left:3px solid var(--orange); }
+  .risk-factor.med   { border-left:3px solid var(--yellow); }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 40px; padding: 18px 32px; border-top:1px solid var(--border);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:10px; color:var(--text3);
+  }
+  .footer a { color:var(--text3); text-decoration:none; }
+  .footer a:hover { color:var(--text2); }
+
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:var(--bg2); }
+  ::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
+
+  @media (max-width:1100px) {
+    .kpi-row { grid-template-columns:repeat(3,1fr); }
+    .two-col { grid-template-columns:1fr; }
+    .three-col { grid-template-columns:1fr 1fr; }
+    .news-grid { grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:700px) {
+    .kpi-row { grid-template-columns:1fr 1fr; }
+    .three-col { grid-template-columns:1fr; }
+    .mitig-grid { grid-template-columns:1fr; }
+    .news-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="top-header">
+  <div class="logo-area">
+    <h1>🔴 Risk Analysis Dashboard</h1>
+    <div class="sub">9 Kebutuhan Pokok &amp; Nilai Tukar Rupiah · Indonesia · 5 Juni 2026</div>
+  </div>
+  <div class="meta-right">
+    <div class="date-badge">Diperbarui: Jumat, 5 Juni 2026, 06.00 WIB · Sumber: BI, BPS, Bapanas, Kemendag</div>
+    <div class="alert-banner"><span class="dot-blink"></span> CRITICAL RISK — RUPIAH REKOR TERLEMAH SEJARAH</div>
+  </div>
+</header>
+
+<!-- ── BREAKING NEWS BAR ── -->
+<div class="breaking-bar">
+  <span class="breaking-tag">⚡ Breaking</span>
+  <span class="breaking-text">
+    Rupiah tembus <span>Rp 18.022/USD</span> pada 5 Juni 2026 — level terlemah sepanjang sejarah RI &nbsp;·&nbsp;
+    Inflasi YoY naik ke <span>3,08%</span> (Mei 2026, BPS) &nbsp;·&nbsp;
+    BI batasi pembelian USD jadi <span>USD 25.000/bulan</span> mulai 2 Juni 2026 &nbsp;·&nbsp;
+    Sistem pangan hadapi <span>Krisis Ganda</span>: El Niño + Geopolitik + Energi
+  </span>
+</div>
+
+<div class="main-wrap">
+
+<!-- ════════════════════════════════
+     KPI ROW — DATA 5 JUNI 2026
+════════════════════════════════ -->
+<div class="section-title">Indikator Kunci Ekonomi Makro — Data 5 Juni 2026</div>
+<div class="kpi-row">
+  <div class="kpi-card record">
+    <div class="kpi-label">Kurs USD/IDR <span class="record-tag">REKOR</span></div>
+    <div class="kpi-value">18.022</div>
+    <div class="kpi-sub">Rp per 1 USD · 5 Juni 2026</div>
+    <span class="kpi-change up">▲ +7.8% YTD · Terlemah Sejarah</span>
+  </div>
+  <div class="kpi-card warning">
+    <div class="kpi-label">BI Rate</div>
+    <div class="kpi-value">5.25%</div>
+    <div class="kpi-sub">Tetap · Batas USD ↓ $25K/bln</div>
+    <span class="kpi-change up">▲ Naik 50 bps Mei 2026</span>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">Inflasi YoY (BPS Mei)</div>
+    <div class="kpi-value">3.08%</div>
+    <div class="kpi-sub">MtM +0.28% · YtD 1.35%</div>
+    <span class="kpi-change up">▲ Pangan &amp; Emas dominan</span>
+  </div>
+  <div class="kpi-card warning">
+    <div class="kpi-label">Cadangan Devisa</div>
+    <div class="kpi-value">$146.2M</div>
+    <div class="kpi-sub">Miliar USD · April 2026</div>
+    <span class="kpi-change up">▼ –$10M terpakai intervensi</span>
+  </div>
+  <div class="kpi-card alert">
+    <div class="kpi-label">PDB Growth (IMF)</div>
+    <div class="kpi-value">5.0%</div>
+    <div class="kpi-sub">Proyeksi 2026 · World Bank 4.7%</div>
+    <span class="kpi-change neu">↓ Revisi dari 5.1%</span>
+  </div>
+  <div class="kpi-card teal">
+    <div class="kpi-label">Stok Beras Bulog</div>
+    <div class="kpi-value">5.37 Jt T</div>
+    <div class="kpi-sub">Rekor tertinggi · cukup 10–11 bln</div>
+    <span class="kpi-change dn">▼ Aman hadapi El Niño</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     CHART RUPIAH + RISK MATRIX
+════════════════════════════════ -->
+<div class="section-title">Tren Kurs Rupiah Jan–Jun 2026 &amp; Peta Risiko Sistemik</div>
+<div class="two-col">
+
+  <!-- Rupiah SVG Chart -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon icon-red">📉</span>
+      Pergerakan Rupiah vs USD — Jan hingga 5 Juni 2026
+    </div>
+    <div style="position:relative;height:165px;margin-bottom:10px;">
+      <svg viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e53935" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#e53935" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="lineColor" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#fb8c00"/>
+            <stop offset="60%" stop-color="#e53935"/>
+            <stop offset="100%" stop-color="#ff1744"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Horizontal grid -->
+        <line x1="52" y1="18" x2="680" y2="18" stroke="#1e1e1e" stroke-width="1"/>
+        <line x1="52" y1="48" x2="680" y2="48" stroke="#1e1e1e" stroke-width="1"/>
+        <line x1="52" y1="78" x2="680" y2="78" stroke="#1e1e1e" stroke-width="1"/>
+        <line x1="52" y1="108" x2="680" y2="108" stroke="#1e1e1e" stroke-width="1"/>
+        <line x1="52" y1="138" x2="680" y2="138" stroke="#1e1e1e" stroke-width="1"/>
+        <!-- Y axis labels: range 16500–18200, height 120px (y18–y138) -->
+        <!-- 18200→18, 17900→48, 17600→78, 17300→108, 17000→138(approx) -->
+        <text x="48" y="22" text-anchor="end" fill="#444" font-size="8.5">18.200</text>
+        <text x="48" y="52" text-anchor="end" fill="#444" font-size="8.5">17.900</text>
+        <text x="48" y="82" text-anchor="end" fill="#444" font-size="8.5">17.600</text>
+        <text x="48" y="112" text-anchor="end" fill="#444" font-size="8.5">17.300</text>
+        <text x="48" y="142" text-anchor="end" fill="#444" font-size="8.5">16.900</text>
+        <!-- X labels: Jan Feb Mar Apr Mei Jun -->
+        <text x="90"  y="153" text-anchor="middle" fill="#444" font-size="8.5">Jan</text>
+        <text x="195" y="153" text-anchor="middle" fill="#444" font-size="8.5">Feb</text>
+        <text x="300" y="153" text-anchor="middle" fill="#444" font-size="8.5">Mar</text>
+        <text x="405" y="153" text-anchor="middle" fill="#444" font-size="8.5">Apr</text>
+        <text x="510" y="153" text-anchor="middle" fill="#444" font-size="8.5">Mei</text>
+        <text x="650" y="153" text-anchor="middle" fill="#e53935" font-size="8.5" font-weight="700">Jun</text>
+
+        <!-- Data points (y = 138 - ((val-16900)/1300)*120)
+          Jan 1 : 16750 → below scale, cap at 138
+          Jan 15: 16900 → y=138
+          Feb 1 : 17050 → y=138-(150/1300)*120=138-13.8≈124
+          Feb 15: 17200 → y=138-27.7≈110
+          Mar 1 : 17300 → y=138-36.9≈101
+          Mar 15: 17350 → y=138-41.5≈96
+          Apr 1 : 17206 → y=138-28≈110
+          Apr 15: 17450 → y=138-50.8≈87
+          May 1 : 17600 → y=138-64.6≈73
+          May 15: 17650 → y=138-69.2≈69
+          May 22: 17683 → y=138-72.3≈66
+          Jun 1 : 17958 → y=138-97.8≈40
+          Jun 4 : 18014 → y=138-103≈35
+          Jun 5 : 18022 → y=138-103.7≈34
+        -->
+        <!-- Area fill -->
+        <path d="M 90,138 L 135,138 L 195,124 L 245,110 L 300,101 L 350,96 L 405,110 L 455,87 L 510,73 L 555,69 L 585,66 L 618,40 L 648,35 L 665,34 L 665,138 L 90,138 Z"
+              fill="url(#areaGrad)"/>
+        <!-- Line -->
+        <polyline
+          points="90,138 135,138 195,124 245,110 300,101 350,96 405,110 455,87 510,73 555,69 585,66 618,40 648,35 665,34"
+          fill="none" stroke="url(#lineColor)" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- Key data dots -->
+        <circle cx="90"  cy="138" r="3" fill="#fb8c00"/>
+        <circle cx="195" cy="124" r="3" fill="#fb8c00"/>
+        <circle cx="300" cy="101" r="3" fill="#fb8c00"/>
+        <circle cx="405" cy="110" r="3" fill="#e07000"/>
+        <circle cx="510" cy="73"  r="3" fill="#e53935"/>
+        <circle cx="618" cy="40"  r="3" fill="#e53935"/>
+        <!-- RECORD dot + label -->
+        <circle cx="665" cy="34" r="5" fill="#e53935" stroke="#ff1744" stroke-width="2" filter="url(#glow)"/>
+        <!-- Record label box -->
+        <rect x="598" y="14" width="68" height="17" rx="3" fill="rgba(229,57,53,0.3)" stroke="rgba(229,57,53,0.6)" stroke-width="1"/>
+        <text x="632" y="26" text-anchor="middle" fill="#ff6b6b" font-size="8.5" font-weight="800">18.022 ⚠ REKOR</text>
+
+        <!-- BI interventions -->
+        <line x1="405" y1="110" x2="405" y2="32" stroke="#1e88e5" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="410" y="30" fill="#1e88e5" font-size="7.5">BI Intervensi Apr</text>
+        <line x1="510" y1="73"  x2="510" y2="44" stroke="#fb8c00" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="514" y="43" fill="#fb8c00" font-size="7.5">Rate ▲5.25%</text>
+        <line x1="618" y1="40"  x2="618" y2="18" stroke="#e53935" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="538" y="17" fill="#e53935" font-size="7.5">USD limit $25K</text>
+
+        <!-- Psychological level Rp18.000 -->
+        <line x1="52" y1="36" x2="680" y2="36" stroke="rgba(229,57,53,0.25)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="56" y="34" fill="rgba(229,57,53,0.6)" font-size="7.5">Rp 18.000</text>
+      </svg>
+    </div>
+    <div style="display:flex;gap:16px;font-size:9.5px;color:var(--text3);">
+      <span style="color:var(--red);">● Kurs Rp/USD</span>
+      <span style="color:var(--blue);">– – Intervensi BI</span>
+      <span style="color:var(--orange);">– – Kenaikan BI Rate</span>
+      <span style="color:rgba(229,57,53,0.6);">- - Level Psikologis Rp18.000</span>
+      <span style="margin-left:auto;">Sumber: BI JISDOR, Katadata, Bloomberg</span>
+    </div>
+  </div>
+
+  <!-- Risk Matrix -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon icon-orange">⬡</span>
+      Matriks Risiko — Dampak × Probabilitas (Update Jun 2026)
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:4px;">
+      <div style="writing-mode:vertical-lr;transform:rotate(180deg);font-size:8.5px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;align-self:center;margin-right:3px;">← Dampak Tinggi</div>
+      <div style="flex:1;">
+        <div style="font-size:8.5px;color:var(--text3);text-align:center;margin-bottom:5px;letter-spacing:0.5px;text-transform:uppercase;">Probabilitas →</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <tr>
+            <td style="padding:2px;"><div style="background:rgba(251,140,0,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.6);text-align:center;">Rantai<br>Pasok</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.35);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.9);text-align:center;">Harga<br>Pangan ▲</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.65);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:800;color:#fff;text-align:center;box-shadow:0 0 8px rgba(229,57,53,0.4);">Rupiah<br>REKOR 🔴</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.35);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.9);text-align:center;">PHK<br>Massal</div></td>
+            <td style="padding:2px;"><div style="background:rgba(251,140,0,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.6);text-align:center;">Defisit<br>Fiskal</div></td>
+          </tr>
+          <tr>
+            <td style="padding:2px;"><div style="background:rgba(67,160,71,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-align:center;">Surplus<br>Neraca</div></td>
+            <td style="padding:2px;"><div style="background:rgba(251,140,0,0.25);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.7);text-align:center;">Inflasi<br>3.08%</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.65);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:800;color:#fff;text-align:center;box-shadow:0 0 8px rgba(229,57,53,0.4);">El Niño<br>SUPER 🔴</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.35);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.9);text-align:center;">Tarif<br>Trump</div></td>
+            <td style="padding:2px;"><div style="background:rgba(251,140,0,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.6);text-align:center;">Capital<br>Outflow</div></td>
+          </tr>
+          <tr>
+            <td style="padding:2px;"><div style="background:rgba(67,160,71,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-align:center;">Stok<br>Bulog ✓</div></td>
+            <td style="padding:2px;"><div style="background:rgba(67,160,71,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-align:center;">Ekspor<br>Sawit</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.35);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.9);text-align:center;">Impor<br>Gandum</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.65);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:800;color:#fff;text-align:center;box-shadow:0 0 8px rgba(229,57,53,0.4);">Perang<br>Timteng 🔴</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.35);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.9);text-align:center;">Minyak<br>Dunia ▲</div></td>
+          </tr>
+          <tr>
+            <td style="padding:2px;"><div style="background:rgba(255,255,255,0.03);border-radius:3px;padding:5px 3px;font-size:7.5px;color:#333;text-align:center;">—</div></td>
+            <td style="padding:2px;"><div style="background:rgba(67,160,71,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-align:center;">GPM<br>5.037×</div></td>
+            <td style="padding:2px;"><div style="background:rgba(251,140,0,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.6);text-align:center;">Kedelai<br>Impor</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.35);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.9);text-align:center;">CPO/B50<br>Bersaing</div></td>
+            <td style="padding:2px;"><div style="background:rgba(251,140,0,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.6);text-align:center;">FDI<br>Turun</div></td>
+          </tr>
+          <tr>
+            <td style="padding:2px;"><div style="background:rgba(255,255,255,0.03);border-radius:3px;padding:5px 3px;font-size:7.5px;color:#333;text-align:center;">—</div></td>
+            <td style="padding:2px;"><div style="background:rgba(255,255,255,0.03);border-radius:3px;padding:5px 3px;font-size:7.5px;color:#333;text-align:center;">—</div></td>
+            <td style="padding:2px;"><div style="background:rgba(67,160,71,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-align:center;">LCT<br>$22.7M</div></td>
+            <td style="padding:2px;"><div style="background:rgba(251,140,0,0.2);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.6);text-align:center;">UMKM<br>Tertekan</div></td>
+            <td style="padding:2px;"><div style="background:rgba(229,57,53,0.35);border-radius:3px;padding:5px 3px;font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.9);text-align:center;">Daya Beli<br>↓</div></td>
+          </tr>
+        </table>
+        <div style="display:flex;gap:10px;margin-top:8px;font-size:8.5px;color:var(--text3);">
+          <span style="color:var(--red);">🔴 Kritis</span>
+          <span style="color:var(--red);">■ Tinggi</span>
+          <span style="color:var(--orange);">■ Sedang</span>
+          <span style="color:var(--green);">■ Rendah/Mitigasi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SEMBAKO TABLE — DATA JUNI 2026
+════════════════════════════════ -->
+<div class="section-title">Harga 9 Bahan Kebutuhan Pokok — Data Terbaru 1–5 Juni 2026</div>
+<div class="card">
+  <div class="card-title">
+    <span class="icon icon-gold">🛒</span>
+    Tabel Harga Real-time (Sumber: SISKAPERBAPO Jatim, PIHPS BI, Bapanas, BPS · 2 Juni 2026)
+  </div>
+  <table class="sembako-table">
+    <thead>
+      <tr>
+        <th style="width:26px;">#</th>
+        <th>Komoditas</th>
+        <th>Harga Terkini</th>
+        <th>Satuan</th>
+        <th>HET/Acuan</th>
+        <th>vs. HET</th>
+        <th>Inflasi YoY</th>
+        <th>Faktor Risiko Utama</th>
+        <th>Level</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">01</td>
+        <td class="commodity">🌾 Beras Medium</td>
+        <td class="price">Rp 13.499</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 12.500</td>
+        <td class="change-up">+8.0% <span class="het-exceeded">▲ di atas HET</span></td>
+        <td class="change-up">▲ +0.38% MtM</td>
+        <td style="color:var(--text2);font-size:11px;">El Niño, kemarau, musim giling terlambat</td>
+        <td class="risk"><span class="risk-badge risk-high">Tinggi</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">01b</td>
+        <td class="commodity">🌾 Beras Premium</td>
+        <td class="price">Rp 14.986</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 14.900</td>
+        <td class="change-up">+0.6%</td>
+        <td class="change-up">▲ stabil</td>
+        <td style="color:var(--text2);font-size:11px;">Mendekati HET, risiko naik jika kemarau intensif</td>
+        <td class="risk"><span class="risk-badge risk-med">Sedang</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">02</td>
+        <td class="commodity">🍬 Gula Kristal Putih</td>
+        <td class="price">Rp 17.199</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 17.500</td>
+        <td class="change-dn">–1.7% di bawah HET</td>
+        <td class="change-neu">→ stabil</td>
+        <td style="color:var(--text2);font-size:11px;">Impor tergantung kurs, perlu pemantauan</td>
+        <td class="risk"><span class="risk-badge risk-med">Sedang</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">03</td>
+        <td class="commodity">🫙 Minyak Goreng Curah</td>
+        <td class="price">Rp 20.879</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 15.500</td>
+        <td class="change-up">+34.7% <span class="het-exceeded">▲▲ jauh di atas HET</span></td>
+        <td class="change-up">▲ +2.87% MtM</td>
+        <td style="color:var(--text2);font-size:11px;">CPO naik, B40→B50, rupiah rekor lemah</td>
+        <td class="risk"><span class="risk-badge risk-crit">KRITIS</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">03b</td>
+        <td class="commodity">🫙 Minyak Goreng Premium</td>
+        <td class="price">Rp 21.576</td>
+        <td style="color:var(--text2);">/liter</td>
+        <td style="color:var(--text2);">Rp 18.500</td>
+        <td class="change-up">+16.6% <span class="het-exceeded">▲ di atas HET</span></td>
+        <td class="change-up">▲ +6.38%</td>
+        <td style="color:var(--text2);font-size:11px;">Tekanan biaya produksi naik akibat kurs</td>
+        <td class="risk"><span class="risk-badge risk-high">Tinggi</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">03c</td>
+        <td class="commodity">🫙 Minyakita (Kemasan Sederhana)</td>
+        <td class="price">Rp 19.175</td>
+        <td style="color:var(--text2);">/liter</td>
+        <td style="color:var(--text2);">Rp 15.700</td>
+        <td class="change-up">+22.1% <span class="het-exceeded">▲▲ jauh di atas HET</span></td>
+        <td class="change-up">▲ naik signifikan</td>
+        <td style="color:var(--text2);font-size:11px;">Seharusnya terjangkau, gagal fungsi subsidi</td>
+        <td class="risk"><span class="risk-badge risk-crit">KRITIS</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">04</td>
+        <td class="commodity">🌾 Tepung Terigu</td>
+        <td class="price">Rp 11.435</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 10.500</td>
+        <td class="change-up">+8.9%</td>
+        <td class="change-up">▲ +0.14%</td>
+        <td style="color:var(--text2);font-size:11px;">100% impor gandum, kurs &amp; geopolitik Ukraina/Timteng</td>
+        <td class="risk"><span class="risk-badge risk-high">Tinggi</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">05</td>
+        <td class="commodity">🥩 Daging Sapi (Paha Belakang)</td>
+        <td class="price">Rp 124.268</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 130.000</td>
+        <td class="change-dn">–4.4% di bawah acuan</td>
+        <td class="change-up">▲ naik vs Jun 4</td>
+        <td style="color:var(--text2);font-size:11px;">Naik per 4 Jun 2026; biaya logistik dan impor meningkat</td>
+        <td class="risk"><span class="risk-badge risk-med">Sedang</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">06</td>
+        <td class="commodity">🍗 Daging Ayam Ras</td>
+        <td class="price">Rp 35.490</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 36.750</td>
+        <td class="change-dn">–3.4% di bawah acuan</td>
+        <td class="change-dn">▼ turun Jun 2026</td>
+        <td style="color:var(--text2);font-size:11px;">Harga ayam turun per 4 Jun; pakan impor tetap risiko</td>
+        <td class="risk"><span class="risk-badge risk-low">Rendah</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">07</td>
+        <td class="commodity">🥚 Telur Ayam Ras</td>
+        <td class="price">Rp 26.264</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 27.000</td>
+        <td class="change-dn">–2.7% di bawah acuan</td>
+        <td class="change-up">▲ naik Jun 2026</td>
+        <td style="color:var(--text2);font-size:11px;">Telur naik per 4 Jun; biaya pakan berbasis impor</td>
+        <td class="risk"><span class="risk-badge risk-med">Sedang</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">08</td>
+        <td class="commodity">🥛 Susu (Kental Manis Bendera 370g)</td>
+        <td class="price">Rp 12.437</td>
+        <td style="color:var(--text2);">/kaleng</td>
+        <td style="color:var(--text2);">—</td>
+        <td class="change-neu">→ stabil</td>
+        <td class="change-up">▲ +1.1%</td>
+        <td style="color:var(--text2);font-size:11px;">Bahan baku susu impor, tekanan kurs moderat</td>
+        <td class="risk"><span class="risk-badge risk-low">Rendah</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--text3);font-size:10px;">09</td>
+        <td class="commodity">🧂 Garam Beryodium Halus</td>
+        <td class="price">Rp 9.407</td>
+        <td style="color:var(--text2);">/kg</td>
+        <td style="color:var(--text2);">Rp 8.000</td>
+        <td class="change-up">+17.6%</td>
+        <td class="change-neu">→ stabil</td>
+        <td style="color:var(--text2);font-size:11px;">Produksi lokal; kemarau El Niño justru meningkatkan produksi garam</td>
+        <td class="risk"><span class="risk-badge risk-low">Rendah</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:10px;font-size:9px;color:var(--text3);padding:0 8px;">
+    * HET = Harga Eceran Tertinggi pemerintah. Data primer: SISKAPERBAPO Jatim (2 Juni 2026), PIHPS Bank Indonesia, Panel Harga Bapanas, BPS. Harga dapat berbeda antar wilayah. Jawa Timur digunakan sebagai proxy nasional karena kelengkapan data.
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     INFLASI BAR + GAUGES
+════════════════════════════════ -->
+<div class="section-title">Analisis Inflasi &amp; Tekanan Sistemik — Mei 2026 (BPS)</div>
+<div class="three-col">
+
+  <!-- Inflasi bar -->
+  <div class="card" style="grid-column:span 2;">
+    <div class="card-title">
+      <span class="icon icon-orange">📊</span>
+      Inflasi Harga Komoditas Sembako (YoY Mei 2026 &amp; Andil Inflasi)
+    </div>
+    <div style="padding:4px 0;">
+      <div class="bar-row">
+        <span class="bar-label">Minyak Goreng (all)</span>
+        <div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--red);"></div></div>
+        <span class="bar-value" style="color:var(--red);">+6.38%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Emas Perhiasan</span>
+        <div class="bar-track"><div class="bar-fill" style="width:60%;background:var(--red);"></div></div>
+        <span class="bar-value" style="color:var(--red);">+5.5%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Beras (semua kualitas)</span>
+        <div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--orange);"></div></div>
+        <span class="bar-value" style="color:var(--orange);">+3.5%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Gula Pasir</span>
+        <div class="bar-track"><div class="bar-fill" style="width:28%;background:var(--orange);"></div></div>
+        <span class="bar-value" style="color:var(--orange);">+2.6%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Tepung Terigu</span>
+        <div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--yellow);"></div></div>
+        <span class="bar-value" style="color:var(--yellow);">+2.0%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Daging Sapi</span>
+        <div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--yellow);"></div></div>
+        <span class="bar-value" style="color:var(--yellow);">+1.8%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Telur Ayam</span>
+        <div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--yellow);"></div></div>
+        <span class="bar-value" style="color:var(--yellow);">+1.3%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Susu Kental Manis</span>
+        <div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--green);"></div></div>
+        <span class="bar-value" style="color:var(--green);">+0.9%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Daging Ayam Ras</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--green);"></div></div>
+        <span class="bar-value" style="color:var(--green);">+0.7%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Garam</span>
+        <div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--green);"></div></div>
+        <span class="bar-value" style="color:var(--green);">+0.4%</span>
+      </div>
+      <div style="margin-top:12px;padding:8px 10px;background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.2);border-radius:5px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:11px;color:var(--text2);">Total Inflasi YoY Mei 2026 (BPS)</span>
+        <span style="font-size:18px;font-weight:800;color:var(--red);">3.08%</span>
+        <span style="font-size:10px;color:var(--text3);">vs Target BI: 2.5±1% &nbsp;|&nbsp; MtM: +0.28%</span>
+        <a href="https://www.bps.go.id/id/pressrelease/2026/06/02/2579/inflasi-year-on-year--y-on-y--pada-mei-2026-sebesar-3-08-persen-.html" target="_blank" style="font-size:9px;color:var(--blue);">↗ BPS.go.id</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gauges -->
+  <div class="card">
+    <div class="card-title"><span class="icon icon-red">🌡</span>Indikator Tekanan</div>
+    <!-- Main gauge -->
+    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:10px;">
+      <svg viewBox="0 0 160 90" width="155" height="88" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#43a047"/>
+            <stop offset="35%" stop-color="#fdd835"/>
+            <stop offset="65%" stop-color="#fb8c00"/>
+            <stop offset="100%" stop-color="#e53935"/>
+          </linearGradient>
+        </defs>
+        <path d="M 18,80 A 62,62 0 0,1 142,80" fill="none" stroke="#1e1e1e" stroke-width="13" stroke-linecap="round"/>
+        <!-- 93% fill: dashoffset = (1-0.93)*195 = 13.7 -->
+        <path d="M 18,80 A 62,62 0 0,1 142,80" fill="none" stroke="url(#g1)" stroke-width="13" stroke-linecap="round" stroke-dasharray="195" stroke-dashoffset="13.7"/>
+        <!-- Needle 93%: angle=180°−(0.93×180°)=12.6° → x=80+62·cos(12.6°)≈141, y=80−62·sin(12.6°)≈67 -->
+        <line x1="80" y1="80" x2="141" y2="67" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="80" cy="80" r="5" fill="#fff"/>
+        <text x="80" y="58" text-anchor="middle" fill="#e53935" font-size="15" font-weight="800">93%</text>
+        <text x="18"  y="90" text-anchor="middle" fill="#444" font-size="7.5">Aman</text>
+        <text x="142" y="90" text-anchor="middle" fill="#444" font-size="7.5">Kritis</text>
+      </svg>
+      <div style="font-size:10px;color:var(--text2);text-align:center;margin-top:2px;">Tekanan Kurs Rupiah</div>
+      <div style="font-size:12px;font-weight:800;color:var(--red);text-align:center;">KRITIS — REKOR SEJARAH</div>
+    </div>
+    <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+    <!-- Mini gauges 2×2 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <!-- Mini gauge 1: Risiko Inflasi 90% | angle=18° | tip=(61,33) -->
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 48" width="80" height="48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#1e1e1e" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#e53935" stroke-width="7" stroke-linecap="round" stroke-dasharray="94.2" stroke-dashoffset="9.4"/>
+          <line x1="40" y1="40" x2="61" y2="33" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="40" cy="40" r="3" fill="#fff"/>
+          <text x="40" y="30" text-anchor="middle" fill="#e53935" font-size="10" font-weight="700">90%</text>
+        </svg>
+        <div style="font-size:8.5px;color:var(--text3);">Risiko Inflasi</div>
+      </div>
+      <!-- Mini gauge 2: Ketahanan Impor 90% | same -->
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 48" width="80" height="48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#1e1e1e" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#e53935" stroke-width="7" stroke-linecap="round" stroke-dasharray="94.2" stroke-dashoffset="9.4"/>
+          <line x1="40" y1="40" x2="61" y2="33" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="40" cy="40" r="3" fill="#fff"/>
+          <text x="40" y="30" text-anchor="middle" fill="#e53935" font-size="10" font-weight="700">90%</text>
+        </svg>
+        <div style="font-size:8.5px;color:var(--text3);">Ketahanan Impor</div>
+      </div>
+      <!-- Mini gauge 3: Risiko Stok Pangan 31% | angle=124.2° | tip=(28,22) -->
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 48" width="80" height="48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#1e1e1e" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#43a047" stroke-width="7" stroke-linecap="round" stroke-dasharray="94.2" stroke-dashoffset="65"/>
+          <line x1="40" y1="40" x2="28" y2="22" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="40" cy="40" r="3" fill="#fff"/>
+          <text x="40" y="30" text-anchor="middle" fill="#43a047" font-size="10" font-weight="700">31%</text>
+        </svg>
+        <div style="font-size:8.5px;color:var(--text3);">Risiko Stok Pangan</div>
+      </div>
+      <!-- Mini gauge 4: Risiko Geopolitik 70% | angle=54° | tip=(53,22) -->
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 48" width="80" height="48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#1e1e1e" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 10,40 A 30,30 0 0,1 70,40" fill="none" stroke="#fb8c00" stroke-width="7" stroke-linecap="round" stroke-dasharray="94.2" stroke-dashoffset="28.3"/>
+          <line x1="40" y1="40" x2="53" y2="22" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="40" cy="40" r="3" fill="#fff"/>
+          <text x="40" y="30" text-anchor="middle" fill="#fb8c00" font-size="10" font-weight="700">70%</text>
+        </svg>
+        <div style="font-size:8.5px;color:var(--text3);">Risiko Geopolitik</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     FAKTOR RISIKO + TIMELINE
+════════════════════════════════ -->
+<div class="section-title">Analisis Faktor Risiko Sistemik &amp; Kronologi Terbaru</div>
+<div class="two-col">
+
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <!-- Risk 1 -->
+    <div class="risk-factor crit">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text);">🔴 KRITIS — Rupiah Tembus Rp 18.022 (Rekor Terlemah Sejarah)</div>
+        <span class="risk-badge risk-crit">KRITIS BARU</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;">
+        Per 5 Juni 2026, rupiah berada di <strong style="color:var(--red);">Rp 18.022/USD</strong> — level terburuk dalam sejarah Republik Indonesia. Rupiah melemah <strong style="color:var(--red);">7.8% YTD</strong> dalam 9 minggu berturut-turut. Faktor: permintaan dolar korporasi untuk pembayaran dividen dan utang luar negeri, eskalasi konflik Timur Tengah, dan sentimen risk-off global. DPR mendesak BI dan Kemenkeu segera bertindak. BI sudah memangkas batas beli dolar menjadi <strong>USD 25.000/bulan</strong> dan menghabiskan <strong>USD 10 miliar</strong> cadangan devisa untuk intervensi.
+      </div>
+    </div>
+    <!-- Risk 2 -->
+    <div class="risk-factor crit">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text);">🔴 KRITIS — Krisis Ganda Sistem Pangan Juni 2026</div>
+        <span class="risk-badge risk-crit">KRITIS BARU</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;">
+        Babel Insight (Jun 2026) melaporkan sistem pangan Indonesia menghadapi tiga tekanan bersamaan: <strong>(1) Perang Iran–AS</strong> yang eskalasi, <strong>(2) El Niño Super</strong> yang mengancam produksi pangan, dan <strong>(3) Minyak bumi pernah capai $126/barel</strong> kini stabil di $90–100/barel. Cadangan strategis minyak domestik hanya cukup <strong>22 hari</strong>. LNG Asia sempat naik 140%. Dampak: biaya transportasi, logistik, pupuk, dan pendingin pangan melonjak. Krisis pangan global 2026 mengancam tambahan <strong>45 juta orang kelaparan</strong> secara global.
+      </div>
+    </div>
+    <!-- Risk 3 -->
+    <div class="risk-factor high">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text);">🟠 TINGGI — Minyak Goreng Melampaui HET (Minyakita +22%)</div>
+        <span class="risk-badge risk-high">Tinggi</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;">
+        Minyak goreng curah menyentuh <strong style="color:var(--orange);">Rp 20.879/kg</strong> dan Minyakita — yang seharusnya terjangkau — kini di <strong style="color:var(--orange);">Rp 19.175/liter</strong>, melampaui HET Rp 15.700 hingga 22%. Penyebab: peningkatan CPO untuk biodiesel B40 menuju B50, rupiah rekor lemah menaikkan biaya impor bahan kemas dan additive, serta tekanan logistik nasional. Inflasi minyak goreng MtM Mei 2026 sebesar <strong>+2.87%</strong>.
+      </div>
+    </div>
+    <!-- Risk 4 -->
+    <div class="risk-factor high">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text);">🟠 TINGGI — Super El Niño 2026 &amp; Kebutuhan Dolar Korporasi</div>
+        <span class="risk-badge risk-high">Tinggi</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;">
+        BMKG proyeksikan El Niño skala mendekati 1997–1998 (yang memicu krisis). Puncak kemarau Juli–September. Produksi beras berpotensi turun hingga 1.42%. Bersamaan, BI mengakui kebutuhan dolar korporasi masih tinggi untuk bayar dividen dan utang jatuh tempo, terus menekan rupiah. Rupiah melemah 15% dalam dua tahun terakhir (Badan Pengkajian MPR).
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="card">
+    <div class="card-title"><span class="icon icon-teal">📅</span>Kronologi Peristiwa Kunci 2026</div>
+    <div class="timeline">
+      <div class="tl-item info">
+        <div class="tl-date">Januari 2026</div>
+        <div class="tl-text">Inflasi pangan diwaspadai. BI Rate 4.75%. Mendagri minta daerah perkuat cadangan logistik pangan.</div>
+        <div class="tl-source"><a href="https://radarpalu.jawapos.com/nasional/amp/2607178411/inflasi-januari-2026-terkendali-mendagri-minta-daerah-tetap-waspadai-komoditas-pangan-dan-perkuat-cadangan-logistik" style="color:var(--text3);" target="_blank">↗ Radarpalu Jawapos</a></div>
+      </div>
+      <div class="tl-item warning">
+        <div class="tl-date">Februari 2026</div>
+        <div class="tl-text">Perang Timur Tengah meletus. Harga minyak dunia naik tajam. Jalur pelayaran terganggu, harga pangan global naik.</div>
+        <div class="tl-source"><a href="https://www.bi.go.id/id/publikasi/ruang-media/news-release/Pages/sp_282326.aspx" style="color:var(--text3);" target="_blank">↗ Bank Indonesia</a></div>
+      </div>
+      <div class="tl-item warning">
+        <div class="tl-date">Maret 2026</div>
+        <div class="tl-text">Harga minyak brent sempat capai $126/barel. Inflasi bulanan dipicu pangan dan transportasi. Pemerintah berhasil jaga stabilitas Ramadan via GPM dan bansos.</div>
+        <div class="tl-source"><a href="https://www.kompas.id/artikel/inflasi-bulanan-maret-2026-dipicu-harga-pangan-dan-transportasi" style="color:var(--text3);" target="_blank">↗ Kompas.id</a></div>
+      </div>
+      <div class="tl-item warning">
+        <div class="tl-date">April 2026</div>
+        <div class="tl-text">22 komoditas pangan naik. BI turunkan batas beli dolar ke $50.000/bln. Stok beras capai 4.6 juta ton. IMF revisi PDB ke 5%.</div>
+        <div class="tl-source"><a href="https://databoks.katadata.co.id/en/economics-macro/statistics/69d5d8be27685/daftar-harga-pangan-yang-naik-di-indonesia-awal-april-2026" style="color:var(--text3);" target="_blank">↗ Katadata</a></div>
+      </div>
+      <div class="tl-item danger">
+        <div class="tl-date">Mei 2026</div>
+        <div class="tl-text">Rupiah tembus Rp 17.683. BI naikkan BI Rate ke 5.25% (+50 bps). Cadangan devisa –$10M. Inflasi YoY Mei: 3.08% (BPS). Bansos pangan diperpanjang ke Juni.</div>
+        <div class="tl-source"><a href="https://www.bps.go.id/id/pressrelease/2026/06/02/2579/inflasi-year-on-year--y-on-y--pada-mei-2026-sebesar-3-08-persen-.html" style="color:var(--text3);" target="_blank">↗ BPS.go.id · CNBC Indonesia</a></div>
+      </div>
+      <div class="tl-item new">
+        <div class="tl-date">2 Juni 2026 <span class="tl-new">BARU</span></div>
+        <div class="tl-text">BI berlakukan batas beli dolar TURUN ke $25.000/bulan. GPM sudah 5.037 kali di 417 kab/kota. Kompas beritakan "DSI, B50, dan Mahalnya Menjaga Rupiah".</div>
+        <div class="tl-source"><a href="https://money.kompas.com/read/2026/06/02/110500426/dsi-b50-dan-mahalnya-menjaga-rupiah" style="color:var(--text3);" target="_blank">↗ Kompas Money</a></div>
+      </div>
+      <div class="tl-item new">
+        <div class="tl-date">4 Juni 2026 <span class="tl-new">BARU</span></div>
+        <div class="tl-text"><strong style="color:var(--red);">RUPIAH TEMBUS Rp 18.000 PERTAMA KALI DALAM SEJARAH.</strong> DPR desak Menkeu dan BI segera bertindak. BI buka suara: tekanan dari dividend repatriation dan geopolitik Timteng. Harga sembako di perbatasan Nunukan melonjak.</div>
+        <div class="tl-source"><a href="https://ekonomi.republika.co.id/berita/tg35xl423/rupiah-tembus-rp-18000-terlemah-sepanjang-sejarah" style="color:var(--text3);" target="_blank">↗ Republika · Kompas Money · Suara.com</a></div>
+      </div>
+      <div class="tl-item new">
+        <div class="tl-date">5 Juni 2026 <span class="tl-new">KINI</span></div>
+        <div class="tl-text">Kurs USD/IDR: <strong style="color:var(--red);">Rp 18.022</strong>. Proyeksi hari ini: Rp 17.780–18.322. BI siapkan cadangan devisa $146M sebagai amunisi intervensi. Sistem pangan hadapi "Krisis Ganda". BMKG konfirmasi El Niño mendekati skala 1997.</div>
+        <div class="tl-source"><a href="https://www.suara.com/bisnis/2026/06/04/145820/waspada-gejolak-ekonomi-bi-siapkan-amunisi-cadangan-devisa-usd-146-miliar" style="color:var(--text3);" target="_blank">↗ Suara.com · Pojok Papua · Trading Economics</a></div>
+      </div>
+      <div class="tl-item info">
+        <div class="tl-date">Juli–Sep 2026 (Proyeksi)</div>
+        <div class="tl-text">B50 biodiesel → CPO makin bersaing dengan pangan. Puncak kemarau El Niño. Risiko lonjakan beras dan minyak goreng berlanjut. Pembayaran dividen korporasi asing meningkatkan tekanan rupiah.</div>
+        <div class="tl-source"><a href="https://indonesianpalmoilnews.com/harga-minyak-goreng-mahal-pada-2026/" style="color:var(--text3);" target="_blank">↗ Indonesian Palm Oil News · BMKG</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     REKOMENDASI MITIGASI
+════════════════════════════════ -->
+<div class="section-title">Rekomendasi Mitigasi Risiko — Update 5 Juni 2026</div>
+<div class="mitig-grid">
+  <div class="mitig-item urgent">
+    <div class="mitig-label">⚡ Darurat — Segera (0–30 Hari)</div>
+    <div class="mitig-title">Stabilisasi Rupiah &amp; Harga Minyak Goreng Kritis</div>
+    <ul class="mitig-list">
+      <li>Bentuk <strong>Task Force Darurat Rupiah</strong>: koordinasi lintas BI–Kemenkeu–BUMN untuk sinkronisasi intervensi valas, repatriasi devisa ekspor, dan penghematan impor tidak mendesak.</li>
+      <li>Percepat intervensi multi-instrumen BI: pasar spot, DNDF, NDF, dan SBN sekunder secara intensif; pantau ketat posisi cadangan devisa agar tidak turun di bawah $130 miliar.</li>
+      <li>Wajibkan sebagian devisa hasil ekspor CPO, batu bara, dan nikel disimpan di perbankan domestik (DSI — Devisa Hasil Ekspor) selama minimal 90 hari.</li>
+      <li>Segera evaluasi dan penegakan HET Minyakita Rp 15.700: audit rantai distribusi, tindak penimbun, dan pastikan subsidi tepat sasaran ke 33.2 juta KPM.</li>
+      <li>Aktifkan operasi pasar beras dan minyak goreng bersubsidi di 34 provinsi, prioritas wilayah timur dan perbatasan yang harga sudah sangat di atas HET.</li>
+    </ul>
+  </div>
+  <div class="mitig-item moderate">
+    <div class="mitig-label">📋 Taktis — Jangka Menengah (1–6 Bulan)</div>
+    <div class="mitig-title">Diversifikasi Sumber Devisa &amp; Rantai Pasok Pangan</div>
+    <ul class="mitig-list">
+      <li>Percepat implementasi LCT (Local Currency Transaction) dengan China, Jepang, Korea, Malaysia, Thailand, UEA untuk kurangi tekanan permintaan USD secara struktural.</li>
+      <li>Diversifikasi impor gandum ke Argentina, Kanada, Australia; kurangi konsentrasi single-source yang rentan geopolitik Timur Tengah dan Ukraina.</li>
+      <li>Evaluasi jadwal implementasi B50 biodiesel: tunda atau beri subsidi silang CPO untuk kebutuhan pangan agar harga minyak goreng tidak melampaui daya beli masyarakat.</li>
+      <li>Percepat pompanisasi sawah dan program benih tahan kekeringan untuk mitigasi El Niño; target panen tetap terjaga di atas 34 juta ton.</li>
+      <li>Perkuat cadangan pangan daerah di 25 provinsi rawan defisit sebelum puncak kemarau Juli–September 2026.</li>
+    </ul>
+  </div>
+  <div class="mitig-item strategic">
+    <div class="mitig-label">🏗 Strategis — Jangka Panjang (6 Bln – 3 Thn)</div>
+    <div class="mitig-title">Kedaulatan Pangan &amp; Ketahanan Moneter Struktural</div>
+    <ul class="mitig-list">
+      <li>Kurangi ketergantungan impor pangan strategis (gandum, kedelai) melalui investasi R&amp;D besar-besaran pada tanaman lokal substitusi: sorgum, singkong, porang, dan ubi kayu.</li>
+      <li>Bangun ekosistem logistik pangan terintegrasi (cold chain, gudang silo di sentra produksi) untuk kurangi disparitas harga antar-wilayah yang kini masih lebar.</li>
+      <li>Reformasi sistem devisa: perkuat regulasi DHE (Devisa Hasil Ekspor) wajib masuk perbankan domestik minimal 6 bulan untuk membangun pool devisa permanen.</li>
+      <li>Kembangkan pasar berjangka (futures) komoditas beras, CPO, dan kedelai yang transparan untuk memberi sinyal harga efisien ke petani, trader, dan importir.</li>
+      <li>Perkuat APTERR (ASEAN Plus Three Emergency Rice Reserve) dan kerjasama regional ketahanan pangan sebagai buffer krisis El Niño dan geopolitik 2026–2027.</li>
+    </ul>
+  </div>
+  <div class="mitig-item preventive">
+    <div class="mitig-label">🛡 Preventif — Perlindungan Sosial &amp; UMKM</div>
+    <div class="mitig-title">Jaga Daya Beli Masyarakat Rentan di Tengah Krisis</div>
+    <ul class="mitig-list">
+      <li>Perpanjang dan perluas bansos pangan (BPNT, beras, minyak goreng) melampaui Juni 2026 selama rupiah masih di atas Rp 17.500/USD, khususnya untuk 40% rumah tangga terbawah.</li>
+      <li>Percepat Gerakan Pangan Murah (GPM) yang telah 5.037 kali di 417 kab/kota — tambah frekuensi di kecamatan rentan inflasi tinggi (Papua, Maluku, NTT).</li>
+      <li>Lindungi UMKM pangan dari kenaikan bahan baku impor: subsidi bunga KUR sektor pangan, pelatihan hedging nilai tukar sederhana, akses pasar digital.</li>
+      <li>Aktifkan jaring pengaman PHK massal di sektor manufaktur padat karya yang tertekan tarif Trump + kurs lemah: program pelatihan vokasi dan padat karya tunai.</li>
+      <li>Sosialisasi masif ke petani mengenai asuransi usaha tani (AUTP), pola tanam adaptif El Niño, dan akses data prakiraan cuaca BMKG presisi tinggi.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     BERITA TERBARU
+════════════════════════════════ -->
+<div class="section-title">Berita &amp; Sumber Data — Terbaru Juni 2026</div>
+<div class="news-grid">
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-new">🔴 TERBARU</span>
+    <div class="news-headline"><a href="https://ekonomi.republika.co.id/berita/tg35xl423/rupiah-tembus-rp-18000-terlemah-sepanjang-sejarah" target="_blank">Rupiah Tembus Rp 18.000 per Dolar AS — Terlemah Sepanjang Sejarah RI</a></div>
+    <div class="news-source">Republika Ekonomi · 4 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-new">🔴 TERBARU</span>
+    <div class="news-headline"><a href="https://money.kompas.com/read/2026/06/04/085746426/rupiah-tembus-rp-18000-per-dollar-as-terlemah-sepanjang-sejarah" target="_blank">Rupiah Tembus Rp 18.000 Per Dollar AS, Terlemah Sepanjang Sejarah — Kompas</a></div>
+    <div class="news-source">Kompas Money · 4 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-new">🔴 TERBARU</span>
+    <div class="news-headline"><a href="https://www.suara.com/news/2026/06/04/142536/rupiah-tembus-rp-18000-per-dolar-as-dpr-desak-menkeu-dan-bi-segera-bertindak" target="_blank">DPR Desak Menkeu dan BI Segera Bertindak Usai Rupiah Tembus Rp 18.000</a></div>
+    <div class="news-source">Suara.com · 4 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-rupiah">Rupiah</span>
+    <div class="news-headline"><a href="https://money.kompas.com/read/2026/06/04/132703326/bi-ungkap-penyebab-rupiah-tembus-rp-18000-per-dollar-as" target="_blank">BI Ungkap Penyebab Rupiah Tembus Rp 18.000 per Dollar AS</a></div>
+    <div class="news-source">Kompas Money · 4 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-rupiah">BI Policy</span>
+    <div class="news-headline"><a href="https://www.suara.com/bisnis/2026/06/04/145820/waspada-gejolak-ekonomi-bi-siapkan-amunisi-cadangan-devisa-usd-146-miliar" target="_blank">Waspada Gejolak Ekonomi, BI Siapkan Amunisi Cadangan Devisa USD 146 Miliar</a></div>
+    <div class="news-source">Suara.com Bisnis · 4 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-rupiah">Devisa</span>
+    <div class="news-headline"><a href="https://www.cnbcindonesia.com/news/20260604114019-4-740073/bi-akui-kebutuhan-dolar-masih-tinggi-buat-bayar-utang-dividen/amp" target="_blank">BI Akui Kebutuhan Dolar Masih Tinggi untuk Bayar Utang &amp; Dividen</a></div>
+    <div class="news-source">CNBC Indonesia · 4 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-rupiah">Analisis</span>
+    <div class="news-headline"><a href="https://money.kompas.com/read/2026/06/02/110500426/dsi-b50-dan-mahalnya-menjaga-rupiah" target="_blank">DSI, B50, dan Mahalnya Menjaga Rupiah — Analisis Kebijakan</a></div>
+    <div class="news-source">Kompas Money · 2 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-pangan">Pangan</span>
+    <div class="news-headline"><a href="https://www.babelinsight.id/sistem-pangan-indonesia-krisis-juni" target="_blank">Sistem Pangan Indonesia Juni 2026 Menghadapi Krisis Ganda</a></div>
+    <div class="news-source">Babel Insight · Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-sembako">Sembako</span>
+    <div class="news-headline"><a href="https://www.detik.com/jatim/bisnis/d-8512760/harga-sembako-jatim-1-juni-2026-minyak-dan-gas-naik" target="_blank">Harga Sembako Jatim 1 Juni 2026: Minyak dan Gas Naik</a></div>
+    <div class="news-source">Detik.com Jatim · 1 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-sembako">Sembako</span>
+    <div class="news-headline"><a href="https://www.detik.com/jatim/bisnis/d-8517176/harga-sembako-jatim-hari-ini-daging-sapi-dan-cabai-rawit-naik/amp" target="_blank">Harga Sembako Jatim: Daging Sapi dan Cabai Rawit Naik (4 Juni 2026)</a></div>
+    <div class="news-source">Detik.com Jatim · 4 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-sembako">Sembako</span>
+    <div class="news-headline"><a href="https://www.detik.com/jatim/bisnis/d-8514006/harga-sembako-jawa-timur-hari-ini-cabai-turun-bawang-merah-minyak-naik" target="_blank">Harga Sembako Jatim: Cabai Turun, Bawang Merah–Minyak Naik</a></div>
+    <div class="news-source">Detik.com Jatim · 3 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-pangan">Inflasi BPS</span>
+    <div class="news-headline"><a href="https://www.bps.go.id/id/pressrelease/2026/06/02/2579/inflasi-year-on-year--y-on-y--pada-mei-2026-sebesar-3-08-persen-.html" target="_blank">BPS: Inflasi YoY Mei 2026 Sebesar 3,08% — Rilis Resmi BPS</a></div>
+    <div class="news-source">BPS.go.id · 2 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-pangan">Bansos</span>
+    <div class="news-headline"><a href="https://ekonomi.bisnis.com/read/20260603/12/1978049/inflasi-pangan-naik-mei-2026-pemerintah-percepat-pasar-murah" target="_blank">Inflasi Pangan Naik Mei 2026, Pemerintah Percepat Pasar Murah (GPM)</a></div>
+    <div class="news-source">Bisnis Indonesia · 3 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-pangan">Bansos</span>
+    <div class="news-headline"><a href="https://www.infobalinews.id/2026/05/29/bansos-pangan-beras-dan-minyak-goreng-diperpanjang-untuk-jaga-daya-beli-masyarakat/index.html" target="_blank">Bansos Pangan Beras dan Minyak Goreng Diperpanjang ke Juni 2026</a></div>
+    <div class="news-source">InfoBali News · 29 Mei 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-rupiah">Analisis</span>
+    <div class="news-headline"><a href="https://www.mpr.go.id/berita/badan-pengkajian-mpr-depresiasi-rupiah-ketahanan-ekonomi-nasional" target="_blank">MPR: Rupiah Melemah 15% dalam 2 Tahun — Kajian Ketahanan Ekonomi Nasional</a></div>
+    <div class="news-source">MPR.go.id · Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-rupiah">Inflasi</span>
+    <div class="news-headline"><a href="https://www.merdeka.com/uang/inflasi-tahunan-mei-2026-tembus-308-persen-emas-dan-minyak-goreng-jadi-penyebab-utama-579178-mvk.html" target="_blank">Inflasi Tahunan Mei 2026 Tembus 3,08% — Emas dan Minyak Goreng Penyebab Utama</a></div>
+    <div class="news-source">Merdeka.com · 2 Juni 2026</div>
+  </div>
+
+  <div class="news-item new-item">
+    <span class="news-tag tag-rupiah">Analisis</span>
+    <div class="news-headline"><a href="https://www.suara.com/bisnis/2026/05/30/125439/rupiah-sekarat-menuju-rp18000-kebijakan-bi-dinilai-terlambat-jinakkan-bom-waktu-fiskal-dan-global" target="_blank">Rupiah Sekarat Menuju Rp18.000 — Kebijakan BI Dinilai Terlambat</a></div>
+    <div class="news-source">Suara.com Bisnis · 30 Mei 2026</div>
+  </div>
+
+  <div class="news-item">
+    <span class="news-tag tag-pangan">Pangan Global</span>
+    <div class="news-headline"><a href="https://www.babelinsight.id/krisis-pangan-global-ancaman-kelaparan" target="_blank">Krisis Pangan Global 2026 Ancam Tambahan 45 Juta Orang Kelaparan</a></div>
+    <div class="news-source">Babel Insight · Juni 2026</div>
+  </div>
+
+  <div class="news-item">
+    <span class="news-tag tag-iklim">El Niño</span>
+    <div class="news-headline"><a href="https://www.kompas.com/tren/read/2026/05/22/063000965/fenomena-super-el-nino-2026-ekonom-peringatkan-kenaikan-harga-pangan" target="_blank">Super El Niño 2026 — Ekonom Peringatkan Kenaikan Harga Pangan Berlanjut</a></div>
+    <div class="news-source">Kompas.com · 22 Mei 2026</div>
+  </div>
+
+  <div class="news-item">
+    <span class="news-tag tag-geopolit">Geopolitik</span>
+    <div class="news-headline"><a href="https://www.kompas.id/artikel/krisis-minyak-dunia-memperkuat-efek-domino-ke-sektor-manufaktur" target="_blank">Perang &amp; Krisis Minyak Dunia — Efek Domino ke Manufaktur Indonesia</a></div>
+    <div class="news-source">Kompas.id · 2026</div>
+  </div>
+
+  <div class="news-item">
+    <span class="news-tag tag-geopolit">Tarif</span>
+    <div class="news-headline"><a href="https://supplychainindonesia.com/dampak-kebijakan-tarif-resiprokal-trump-terhadap-ekonomi-dan-logistik-indonesia/" target="_blank">Dampak Tarif Resiprokal Trump 19% terhadap Ekonomi &amp; Logistik Indonesia</a></div>
+    <div class="news-source">Supply Chain Indonesia · 2026</div>
+  </div>
+
+  <div class="news-item">
+    <span class="news-tag tag-energi">CPO/Energi</span>
+    <div class="news-headline"><a href="https://indonesianpalmoilnews.com/harga-minyak-goreng-mahal-pada-2026/" target="_blank">Mengapa Harga Minyak Goreng Indonesia Masih Mahal di 2026 — CPO &amp; B40</a></div>
+    <div class="news-source">Indonesian Palm Oil News · 2026</div>
+  </div>
+
+  <div class="news-item">
+    <span class="news-tag tag-sembako">Data Live</span>
+    <div class="news-headline"><a href="https://panelharga.badanpangan.go.id/" target="_blank">Panel Harga Pangan Nasional — Data Real-time Badan Pangan Nasional</a></div>
+    <div class="news-source">badanpangan.go.id · Live</div>
+  </div>
+
+  <div class="news-item">
+    <span class="news-tag tag-sembako">Data Live</span>
+    <div class="news-headline"><a href="https://www.bi.go.id/hargapangan/" target="_blank">PIHPS Nasional — Pusat Informasi Harga Pangan Strategis Bank Indonesia</a></div>
+    <div class="news-source">Bank Indonesia · Live</div>
+  </div>
+
+</div>
+
+<!-- DISCLAIMER -->
+<div style="background:rgba(229,57,53,0.06);border:1px solid rgba(229,57,53,0.2);border-radius:8px;padding:14px 18px;margin-top:28px;font-size:10px;color:var(--text3);line-height:1.7;">
+  <strong style="color:var(--text2);">⚠ Disclaimer:</strong> Dashboard diperbarui dengan data per 5 Juni 2026 dari sumber resmi: BPS (rilis 2 Juni 2026), Bank Indonesia, Badan Pangan Nasional, Kemendag, SISKAPERBAPO Jatim, serta media terpercaya (Kompas, Republika, CNBC Indonesia, Detik, Bisnis Indonesia, Suara.com, Merdeka.com). Proyeksi dan analisis risiko bersifat indikatif dan tidak merupakan rekomendasi investasi atau kebijakan resmi. Harga dan nilai tukar berubah setiap hari; gunakan portal resmi untuk data real-time: <a href="https://panelharga.badanpangan.go.id/" style="color:var(--accent);" target="_blank">Bapanas</a> · <a href="https://www.bi.go.id/hargapangan/" style="color:var(--accent);" target="_blank">PIHPS BI</a> · <a href="https://sp2kp.kemendag.go.id/" style="color:var(--accent);" target="_blank">SP2KP Kemendag</a> · <a href="https://siskaperbapo.jatimprov.go.id/" style="color:var(--accent);" target="_blank">SISKAPERBAPO Jatim</a> · <a href="https://www.bps.go.id" style="color:var(--accent);" target="_blank">BPS.go.id</a>.
+</div>
+
+</div><!-- /main-wrap -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>
+    <strong style="color:var(--text2);">Risk Analysis Dashboard</strong> — 9 Kebutuhan Pokok &amp; Nilai Tukar Rupiah Indonesia &nbsp;|&nbsp;
+    Diperbarui: <strong style="color:var(--red);">5 Juni 2026</strong> &nbsp;|&nbsp; Data: BPS, BI, Bapanas, Kemendag, SISKAPERBAPO
+  </div>
+  <div style="display:flex;gap:14px;">
+    <a href="https://www.bi.go.id" target="_blank">Bank Indonesia</a>
+    <a href="https://www.bps.go.id" target="_blank">BPS</a>
+    <a href="https://badanpangan.go.id" target="_blank">Badan Pangan</a>
+    <a href="https://katadata.co.id" target="_blank">Katadata</a>
+    <a href="https://siskaperbapo.jatimprov.go.id" target="_blank">SISKAPERBAPO</a>
+  </div>
+</footer>
+
+</body>
+</html>
